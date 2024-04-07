@@ -1,15 +1,58 @@
 from app import app
 from flask import render_template, request, redirect
-import users
+import chains, messages, users
 
 @app.route("/")
 def index():
   if users.user_id() == 0:
     return redirect("/login")
   else:
-    return render_template("index.html")
+    chain_list = chains.get_list()
+    user = users.get_username()
+    return render_template("index.html", chains=chain_list, username=user)
   
-@app.route("/login")
+@app.route("/chains")
+def chain():
+  if users.user_id() == 0:
+    return redirect("/login")
+  else:
+    chain_list = chains.get_list()
+    user = users.get_username()
+    return render_template("index.html", chains=chain_list, username=user)
+  
+@app.route("/new-topic")
+def new_topic():
+  return render_template("new-topic.html")
+  
+@app.route("/send-topic", methods=["POST"])
+def send_topic():
+  content = request.form["content"]
+  category = request.form["category"]
+  if chains.send(content, category):
+    return redirect("/")
+  else:
+    return render_template("error.html", message="Creating a topic failed")
+
+@app.route("/chains/<int:id>")
+def see_chain(id):
+  messages_list = messages.get_messages(id)
+  return render_template("see-messages.html", messages=messages_list, count=len(messages_list), chain_id=id)
+
+@app.route("/new-message/<int:id>")
+def new_message(id):
+  return render_template("new-message.html", chain_id=id)
+
+@app.route("/send-message", methods=["POST"])
+def send_message():
+  content = request.form["content"]
+  chain_id = request.form["chain_id"]
+  if messages.send(content, chain_id):
+    url = "/chains/" + str(chain_id)
+    return redirect(url)
+  else:
+    return render_template("error.html", message="Posting a message failed")
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
   if request.method == "GET":
     return render_template("login.html")
@@ -24,9 +67,9 @@ def login():
 @app.route("/logout")
 def logout():
   users.logout()
-  redirect("/")
+  return redirect("/")
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
   if request.method == "GET":
     return render_template("register.html")

@@ -1,0 +1,17 @@
+Messages in chain: {{ count }}
+<hr>
+{% for message in messages %}
+<hr>
+<i>Message:</i> {{ message[0] }}
+<p>
+<i>User:</i> {{ message[1] }}
+<p>
+<hr>
+{% endfor %}
+<hr>
+{% if username != 0 %}
+You are logged in as {{ username }}
+<a href="/new-message/{{ chain_id }}">Post a message</a> | <a href="/logout">Log out</a> | <a href="/">Return to topics</a>
+{% else %}
+<a href="/login">Login</a>
+{% endif %}
