@@ -7,3 +7,6 @@ Retype password: <input type="password" name="password2">
 <p>
 <input type="submit" value="Create user">
 </form>
+{% if error %}
+Error: {{ error }}
+{% endif %}

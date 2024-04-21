@@ -5,4 +5,7 @@ Password: <input type="password" name="password">
 <p>
 <input type="submit" value="Login">
 </form>
+{% if error %}
+Error: {{ error }}
+{% endif %}
 If you have not created a user, you can register <a href="/register">here</a>

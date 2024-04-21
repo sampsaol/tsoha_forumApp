@@ -30,10 +30,14 @@ def send_topic():
   category = request.form["category"]
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
+  if len(content) > 1000:
+    return render_template("new-topic.html", error="Topic too long (max 1000 characters)")
+  if len(category) > 100:
+    return render_template("new-topic.html", error="Category too long (max 100 characters)")
   if chains.send(content, category):
     return redirect("/")
   else:
-    return render_template("error.html", message="Creating a topic failed")
+    return render_template("new-topic.html", error="Creating a topic failed")
 
 @app.route("/chains/<int:id>")
 def see_chain(id):
@@ -50,11 +54,13 @@ def send_message():
   chain_id = request.form["chain_id"]
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
+  if len(content) > 5000:
+    return render_template("new-message.html", error="Message is too long (max 5000 characters)")
   if messages.send(content, chain_id):
     url = "/chains/" + str(chain_id)
     return redirect(url)
   else:
-    return render_template("error.html", message="Posting a message failed")
+    return render_template("new-message.html", error="Posting a message failed")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -66,7 +72,7 @@ def login():
     if users.login(username, password):
       return redirect("/")
     else:
-      return render_template("error.html", message="Wrong username or password")
+      return render_template("login.html", error="Wrong username or password")
     
 @app.route("/logout")
 def logout():
@@ -82,11 +88,11 @@ def register():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-      return render_template("error.html", message="Passwords do not match")
+      return render_template("register.html", error="Passwords do not match")
     if len(password1) < 8 or len(username) < 4:
-      return render_template("error.html", message="Password or username too short")
+      return render_template("register.html", error="Password or username too short (password min 8 characters, username min 4 characters)")
     if users.register(username, password1):
       return redirect("/")
     else:
-      return render_template("error.html", message="Registration unsuccesful, username must be unique")
+      return render_template("register.html", error="Registration unsuccesful, username must be unique")
   
