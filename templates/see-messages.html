@@ -6,6 +6,12 @@ Messages in chain: {{ count }}
 <p>
 <i>User:</i> {{ message[1] }}
 <p>
+<i>Likes: </i> {{ message[2] }}
+<p>
+<form action="/like/{{ message[3] }}" method="post">
+<input type="submit" value="Like message">
+<input type="hidden" name="chain_id" value="{{ chain_id }}">
+</form>
 <hr>
 {% endfor %}
 <hr>
