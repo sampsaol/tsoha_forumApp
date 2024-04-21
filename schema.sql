@@ -18,3 +18,9 @@ CREATE TABLE messages (
   chain_id INTEGER REFERENCES chains,
   user_id INTEGER REFERENCES users
 );
+
+CREATE TABLE likes (
+  id SERIAL PRIMARY KEY,
+  message_id INTEGER REFERENCES messages,
+  user_id INTEGER REFERENCES users
+);

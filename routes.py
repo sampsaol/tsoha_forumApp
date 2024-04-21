@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, abort
 import chains, messages, users
 
 @app.route("/")
@@ -28,6 +28,8 @@ def new_topic():
 def send_topic():
   content = request.form["content"]
   category = request.form["category"]
+  if session["csrf_token"] != request.form["csrf_token"]:
+    abort(403)
   if chains.send(content, category):
     return redirect("/")
   else:
@@ -46,6 +48,8 @@ def new_message(id):
 def send_message():
   content = request.form["content"]
   chain_id = request.form["chain_id"]
+  if session["csrf_token"] != request.form["csrf_token"]:
+    abort(403)
   if messages.send(content, chain_id):
     url = "/chains/" + str(chain_id)
     return redirect(url)
@@ -79,6 +83,8 @@ def register():
     password2 = request.form["password2"]
     if password1 != password2:
       return render_template("error.html", message="Passwords do not match")
+    if len(password1) < 8 or len(username) < 4:
+      return render_template("error.html", message="Password or username too short")
     if users.register(username, password1):
       return redirect("/")
     else:
