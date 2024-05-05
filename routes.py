@@ -62,6 +62,17 @@ def send_message():
   else:
     return render_template("new-message.html", error="Posting a message failed")
 
+@app.route("/like-message", methods=["POST"])
+def like_message():
+  message_id = request.form["message_id"]
+  chain_id = request.form["chain_id"]
+  if session["csrf_token"] != request.form["csrf_token"]:
+    abort(403)
+  if messages.like(message_id):
+    url = "chains/" + str(chain_id)
+    return redirect(url)
+  
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
   if request.method == "GET":
