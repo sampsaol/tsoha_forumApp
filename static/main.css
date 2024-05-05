@@ -1,0 +1,21 @@
+body {
+  margin: auto;
+  max-width: 45em;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  background: gray;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+hr {
+  border: 0;
+  border-top: 0.05em solid #ccc;
+  margin: 1em 0;
+}
+
+.content {
+  padding: 1em;
+}

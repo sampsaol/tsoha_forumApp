@@ -1,8 +1,11 @@
+<!DOCTYPE html>
+
 {% extends "layout.html" %}
 {% block nav %}
-<div class="nav-links">
-{{ super() }} | <a href="/new-message/{{ chain_id }}">Post a message</a>
-</div>
+<a href="/">Front page</a> |
+<a href="/logout">Log out</a> |
+<a href="/new-message/{{ chain_id }}">Post a message</a>
+<hr>
 {% endblock %}
 {% block content %}
 Messages in chain: {{ count }}

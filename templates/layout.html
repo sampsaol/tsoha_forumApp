@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="assets/main.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 
 <title>Forum App - {% block title %}{% endblock %}</title>
@@ -10,5 +10,7 @@
 <a href="/logout">Log out</a>
 <hr>
 {% endblock %}
+<div class="content">
 {% block content %}{% endblock %}
+</div>
 <hr>
