@@ -4,7 +4,7 @@
 {% block title %}{% endblock %}
 {%block navigation %}{% endblock %}
 {% block content %}
-<form action="/login" method="post">
+<form class="message_form" action="/login" method="post">
 <label for="username">Username: </label>
 <input type="text" name="username" value="{{ username }}">
 <p>
@@ -14,8 +14,12 @@
 <input type="submit" value="Login">
 </form>
 {% if error %}
+<div class="info">
 Error: {{ error }}
+</div>
 {% endif %}
 <br>
+<div class="info">
 If you have not created a user, you can register <a href="/register">here</a>
+</div>
 {% endblock %}

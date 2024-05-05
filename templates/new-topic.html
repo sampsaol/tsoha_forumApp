@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 
 {% extends "layout.html" %}
+{% block navigation %}
+<nav>
+<ul>
+<li><a href="/">Front page</a></li>
+<li><a href="/logout">Log out</a></li>
+<li><a href="/new-category">Create category</a></li>
+</ul>
+</nav>
+<hr>
+{% endblock %}
 <hr>
 {% block content %}
 <form class="message_form" action="/send-topic" method="post">
@@ -10,7 +20,11 @@ Content:
 <br>
 Category:
 <br>
-<textarea name="category" rows="1" cols="50">{{ category }}</textarea>
+<select name="category" class="category_select">
+{% for category in existing_categories %}
+<option value="{{ category[0] }}">{{ category[0] }}</option>
+{% endfor %}
+</select>
 <br>
 <input type="submit" value="Send">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

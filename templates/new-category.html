@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block content %}
+<form class="message_form" action="/send-category" method="post">
+Category:
+<br>
+<textarea name="category" rows="1" cols="50">{{ category }}</textarea>
+<br>
+<input type="submit" value="Send">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
+<hr>
+
+<div class="existing_categories">
+<h2>Existing Categories:</h2>
+<ul>
+{% for category in existing_categories %}
+<li>{{ category[0] }}</li>
+{% endfor %}
+</ul>
+</div>
+
+{% if error %}
+<div class="info">
+Error: {{ error }}
+</div>
+{% endif %}
+
+<nav>
+<ul>
+<li><a href="/">Return to chains</a></li>
+</ul>
+</nav>
+{% endblock %}

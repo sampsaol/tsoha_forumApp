@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session, abort
-import chains, messages, users
+import chains, messages, users, categories
 
 
 @app.route("/")
@@ -23,19 +23,21 @@ def chain():
   
 @app.route("/new-topic")
 def new_topic():
-  return render_template("new-topic.html")
+  existing_categories = categories.get_list()
+  return render_template("new-topic.html", existing_categories=existing_categories)
   
 @app.route("/send-topic", methods=["POST"])
 def send_topic():
   content = request.form["content"]
   category = request.form["category"]
+  category_id = categories.get_id(category)
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
   if len(content) > 1000:
     return render_template("new-topic.html", error="Topic too long (max 1000 characters)", content=content, category=category)
-  if len(category) > 100:
-    return render_template("new-topic.html", error="Category too long (max 100 characters)", content=content, category=category)
-  if chains.send(content, category):
+  if len(content) == 0:
+    return render_template("new-topic.html", error="Topic must not be empty", content=content, category=category)
+  if chains.send(content, category_id):
     return redirect("/")
   else:
     return render_template("new-topic.html", error="Creating a topic failed", content=content, category=category)
@@ -58,6 +60,8 @@ def send_message():
     abort(403)
   if len(content) > 5000:
     return render_template("new-message.html", error="Message is too long (max 5000 characters)", content=content)
+  if len(content) == 0:
+    return render_template("new-message.html", error="Message must not be empty", content=content)
   if messages.send(content, chain_id):
     url = "/chains/" + str(chain_id)
     return redirect(url)
@@ -76,7 +80,23 @@ def like_message():
   else:
     return redirect(url)
   
+@app.route("/new-category")
+def new_category():
+  existing_categories = categories.get_list()
+  return render_template("new-category.html", existing_categories=existing_categories)
   
+@app.route("/send-category", methods=["POST"])
+def send_category():
+  category = request.form["category"]
+  existing_categories = categories.get_list()
+  if session["csrf_token"] != request.form["csrf_token"]:
+    abort(403)
+  if len(category) > 100:
+    return render_template("new-category.html", error="Category too long (max 100 characters)", category=category, existing_categories=existing_categories)
+  if categories.add_category(category):
+    return redirect("/")
+  else:
+    return render_template("new-category.html", error="Creating category failed. Note that category must be unique", category=category, existing_categories=existing_categories)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

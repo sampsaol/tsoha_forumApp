@@ -8,6 +8,9 @@ body {
 h1 {
   text-align: center;
   margin-top: 1.5em;
+  background: beige;
+  border: solid #000;
+  border-radius: .5em;
 }
 
 hr {
@@ -31,7 +34,7 @@ hr {
 
 nav li {
   display: inline-block;
-  padding: .5em 1em;
+  padding: .5em 1em; 
   background: beige;
   margin: .3em;
   border-radius: .5em;
@@ -56,6 +59,7 @@ nav li:hover {
   background: beige;
   padding: .5em;
   border-radius: .5em;
+  margin: .5em;
 }
 
 .message_form {
@@ -71,4 +75,43 @@ nav li:hover {
   margin-bottom: 0.5em;
   box-sizing: border-box;
   resize: vertical;
+}
+
+.existing_categories {
+  background: beige;
+  padding: .5em;
+  margin-bottom: 1em;
+  border-radius: .5em;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.existing_categories ul {
+  padding: 0em;
+  margin: .5em;
+  text-align: center;
+}
+
+.existing_categories li {
+  display: inline-block;
+  padding: .5em 1em;
+  background: beige;
+  margin: .3em;
+  border-radius: .5em;
+}
+
+.category_select {
+  padding: .6em;
+  font-size: .8em;
+  border: .02em solid #000;
+  border-radius: .03em;
+  margin-bottom: .3em;
+  width: 100%;
+}
+
+.category_select option {
+  padding: .6em;
+  font-size: 1em;
+  background-color: #fff;
+  color: #333;
 }

@@ -3,7 +3,7 @@
 {% extends "layout.html" %}
 {% block content %}
 {% block navigation %}{% endblock %}
-<form action="register" method="post">
+<form class="message_form" action="register" method="post">
 <label for="username">Username: </label>
 <input type="text" name="username" value="{{ username }}">
 <p>
@@ -15,8 +15,13 @@
 <p>
 <input type="submit" value="Create user">
 </form>
+<br>
 {% if error %}
+<div class="info">
 Error: {{ error }}
+</div>
 {% endif %}
+<div class="info">
 <a href="/">Return to login interface</a>
+</div>
 {% endblock %}

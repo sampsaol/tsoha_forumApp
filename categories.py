@@ -21,3 +21,10 @@ def add_category(category):
     db.session.rollback()
     return False
   
+def get_id(category):
+  sql = text("SELECT id FROM categories WHERE name=:category")
+  result = db.session.execute(sql, {"category":category}).fetchone()
+  if result:
+    return result[0]
+  return None
+  
