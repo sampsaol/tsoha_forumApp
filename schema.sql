@@ -4,6 +4,11 @@ CREATE TABLE users (
   password TEXT
 );
 
+CREATE TABLE categories (
+  id SERIAL PRIMARY KEY,
+  name TEXT UNIQUE
+);
+
 CREATE TABLE chains (
   id SERIAL PRIMARY KEY,
   content TEXT,
@@ -23,9 +28,4 @@ CREATE TABLE likes (
   id SERIAL PRIMARY KEY,
   message_id INTEGER REFERENCES messages,
   user_id INTEGER REFERENCES users
-);
-
-CREATE TABLE categories (
-  id SERIAL PRIMARY KEY,
-  name TEXT UNIQUE
 );

@@ -24,7 +24,8 @@ def chain():
 @app.route("/new-topic")
 def new_topic():
   existing_categories = categories.get_list()
-  return render_template("new-topic.html", existing_categories=existing_categories)
+  category_length = len(existing_categories)
+  return render_template("new-topic.html", existing_categories=existing_categories, category_length=category_length)
   
 @app.route("/send-topic", methods=["POST"])
 def send_topic():

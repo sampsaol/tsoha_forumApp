@@ -33,6 +33,11 @@ Category:
 Error: {{ error }}
 </div>
 {% endif %}
+{% if category_length == 0 %}
+<div class="info">
+First you need to create a category. You can create a category <a href="/new-category">here</a>
+</div>
+{% endif %}
 </form>
 <nav>
 <ul>
