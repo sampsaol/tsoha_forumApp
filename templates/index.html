@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 
 {% extends "layout.html" %}
+{% block navigation %}
+<nav>
+<ul>
+<li><a href="/">Front page</a></li>
+<li><a href="/logout">Log out</a></li>
+<li><a href="/new-topic">Create a topic</a></li>
+</ul>
+</nav>
+<hr>
+{% endblock %}
 {% block content %}
 <hr>
 {% for topic in chains %}
 <div class="messages">
-<i>Topic: </i>{{ topic[0] }}
+<i>Topic: </i><b>{{ topic[0] }}</b>
 <p>
 <i>User:</i> {{ topic[1] }}
 <p>

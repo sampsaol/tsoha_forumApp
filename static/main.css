@@ -57,3 +57,18 @@ nav li:hover {
   padding: .5em;
   border-radius: .5em;
 }
+
+.message_form {
+  background: beige;
+  padding: .5em;
+  border-radius: .5em;
+  max-width: 45em;
+}
+
+.message_form textarea {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  box-sizing: border-box;
+  resize: vertical;
+}
