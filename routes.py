@@ -2,6 +2,7 @@ from app import app
 from flask import render_template, request, redirect, session, abort
 import chains, messages, users
 
+
 @app.route("/")
 def index():
   if users.user_id() == 0:
@@ -31,13 +32,13 @@ def send_topic():
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
   if len(content) > 1000:
-    return render_template("new-topic.html", error="Topic too long (max 1000 characters)")
+    return render_template("new-topic.html", error="Topic too long (max 1000 characters)", content=content, category=category)
   if len(category) > 100:
-    return render_template("new-topic.html", error="Category too long (max 100 characters)")
+    return render_template("new-topic.html", error="Category too long (max 100 characters)", content=content, category=category)
   if chains.send(content, category):
     return redirect("/")
   else:
-    return render_template("new-topic.html", error="Creating a topic failed")
+    return render_template("new-topic.html", error="Creating a topic failed", content=content, category=category)
 
 @app.route("/chains/<int:id>")
 def see_chain(id):
@@ -55,12 +56,12 @@ def send_message():
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
   if len(content) > 5000:
-    return render_template("new-message.html", error="Message is too long (max 5000 characters)")
+    return render_template("new-message.html", error="Message is too long (max 5000 characters)", content=content)
   if messages.send(content, chain_id):
     url = "/chains/" + str(chain_id)
     return redirect(url)
   else:
-    return render_template("new-message.html", error="Posting a message failed")
+    return render_template("new-message.html", error="Posting a message failed", content=content)
 
 @app.route("/like-message", methods=["POST"])
 def like_message():
@@ -68,9 +69,12 @@ def like_message():
   chain_id = request.form["chain_id"]
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
+  url = "chains/" + str(chain_id)
   if messages.like(message_id):
-    url = "chains/" + str(chain_id)
     return redirect(url)
+  else:
+    return redirect(url)
+  
   
 
 @app.route("/login", methods=["GET", "POST"])
@@ -83,7 +87,7 @@ def login():
     if users.login(username, password):
       return redirect("/")
     else:
-      return render_template("login.html", error="Wrong username or password")
+      return render_template("login.html", error="Wrong username or password", username=username)
     
 @app.route("/logout")
 def logout():
@@ -99,11 +103,11 @@ def register():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-      return render_template("register.html", error="Passwords do not match")
+      return render_template("register.html", error="Passwords do not match", username=username)
     if len(password1) < 8 or len(username) < 4:
-      return render_template("register.html", error="Password or username too short (password min 8 characters, username min 4 characters)")
+      return render_template("register.html", error="Password or username too short (password min 8 characters, username min 4 characters)", username=username)
     if users.register(username, password1):
       return redirect("/")
     else:
-      return render_template("register.html", error="Registration unsuccesful, username must be unique")
+      return render_template("register.html", error="Registration unsuccesful, username must be unique", username=username)
   

@@ -1,11 +1,11 @@
 <form action="/send-topic" method="post">
 Content: 
 <br>
-<textarea name="content" rows="4" cols="50"></textarea>
+<textarea name="content" rows="4" cols="50">{{ content }}</textarea>
 <br>
 Category:
 <br>
-<textarea name="category" rows="1" cols="50"></textarea>
+<textarea name="category" rows="1" cols="50">{{ category }}</textarea>
 <br>
 <input type="submit" value="Send">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

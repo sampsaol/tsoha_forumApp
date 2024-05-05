@@ -22,6 +22,11 @@ def like(message_id):
   if user_id == 0:
     return False
 
+  #checking whether the user has already liked the message
+  sql = text("SELECT * FROM likes WHERE message_id = :message_id AND user_id = :user_id")
+  existing_like = db.session.execute(sql, {"message_id":message_id, "user_id":user_id}).fetchone()
+  if existing_like:
+    return False
 
   sql = text("INSERT INTO likes (message_id, user_id) VALUES (:message_id, :user_id)")
   db.session.execute(sql, {"message_id":message_id, "user_id":user_id})
