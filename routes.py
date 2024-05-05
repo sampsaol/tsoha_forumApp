@@ -28,19 +28,20 @@ def new_topic():
   
 @app.route("/send-topic", methods=["POST"])
 def send_topic():
+  existing_categories = categories.get_list()
   content = request.form["content"]
   category = request.form["category"]
   category_id = categories.get_id(category)
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
   if len(content) > 1000:
-    return render_template("new-topic.html", error="Topic too long (max 1000 characters)", content=content, category=category)
+    return render_template("new-topic.html", error="Topic too long (max 1000 characters)", content=content, category=category, existing_categories=existing_categories)
   if len(content) == 0:
-    return render_template("new-topic.html", error="Topic must not be empty", content=content, category=category)
+    return render_template("new-topic.html", error="Topic must not be empty", content=content, category=category, existing_categories=existing_categories)
   if chains.send(content, category_id):
     return redirect("/")
   else:
-    return render_template("new-topic.html", error="Creating a topic failed", content=content, category=category)
+    return render_template("new-topic.html", error="Creating a topic failed", content=content, category=category, existing_categories=existing_categories)
 
 @app.route("/chains/<int:id>")
 def see_chain(id):
@@ -59,14 +60,14 @@ def send_message():
   if session["csrf_token"] != request.form["csrf_token"]:
     abort(403)
   if len(content) > 5000:
-    return render_template("new-message.html", error="Message is too long (max 5000 characters)", content=content)
+    return render_template("new-message.html", error="Message is too long (max 5000 characters)", content=content, chain_id=chain_id)
   if len(content) == 0:
-    return render_template("new-message.html", error="Message must not be empty", content=content)
+    return render_template("new-message.html", error="Message must not be empty", content=content, chain_id=chain_id)
   if messages.send(content, chain_id):
     url = "/chains/" + str(chain_id)
     return redirect(url)
   else:
-    return render_template("new-message.html", error="Posting a message failed", content=content)
+    return render_template("new-message.html", error="Posting a message failed", content=content, chain_id=chain_id)
 
 @app.route("/like-message", methods=["POST"])
 def like_message():
@@ -93,6 +94,8 @@ def send_category():
     abort(403)
   if len(category) > 100:
     return render_template("new-category.html", error="Category too long (max 100 characters)", category=category, existing_categories=existing_categories)
+  if len(category) == 0:
+    return render_template("new-category.html", error="Category must not be empty", category=category, existing_categories=existing_categories)
   if categories.add_category(category):
     return redirect("/")
   else:
