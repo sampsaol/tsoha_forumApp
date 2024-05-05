@@ -34,10 +34,6 @@ hr {
 
 nav li {
   display: inline-block;
-  padding: .5em 1em; 
-  background: beige;
-  margin: .3em;
-  border-radius: .5em;
 }
 
 nav ul {
@@ -47,13 +43,19 @@ nav ul {
 }
 
 nav li a {
+  display: inline-block;
+  padding: .5em 1em; 
+  background: beige;
+  margin: .3em;
+  border-radius: .5em;
   text-decoration: none;
-  color: #000
+  color: #000;
 }
 
-nav li:hover {
+nav li:hover a{
   background-color: #fdfdff
 }
+
 
 .info {
   background: beige;
@@ -95,7 +97,7 @@ nav li:hover {
 .existing_categories li {
   display: inline-block;
   padding: .5em 1em;
-  background: beige;
+  background: #dbdbf5;
   margin: .3em;
   border-radius: .5em;
 }
