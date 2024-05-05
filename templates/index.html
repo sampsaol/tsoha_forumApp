@@ -4,6 +4,7 @@
 {% block content %}
 <hr>
 {% for topic in chains %}
+<div class="messages">
 <i>Topic: </i>{{ topic[0] }}
 <p>
 <i>User:</i> {{ topic[1] }}
@@ -13,11 +14,19 @@
 <i>Time sent:</i> {{ topic[3].strftime("%Y-%m-%d %H:%M:%S") }}
 <p>
 <a href="/chains/{{topic[4]}}">Go to chain</a>
+</div>
 <hr>
 {% endfor %}
 {% if username != 0 %}
+<div class="info">
 You are logged in as {{ username }}
-<a href="/new-topic">Create a topic</a> | <a href="/logout">Log out</a>
+</div>
+<nav>
+<ul>
+<li><a href="/new-topic">Create a topic</a></li> 
+<li><a href="/logout">Log out</a></li>
+</ul>
+</nav>
 {% else %}
 <a href="/login">Login</a>
 {% endif %}

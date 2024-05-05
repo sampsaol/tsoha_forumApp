@@ -15,8 +15,15 @@ Category:
 <input type="submit" value="Send">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 {% if error %}
+<div class="info">
 Error: {{ error }}
+</div>
 {% endif %}
 </form>
-<a href="/">Return to chains</a>
+<nav>
+<ul>
+<li><a href="/">Return to chains</a></li>
+</ul>
+</nav>
+</div>
 {% endblock %}

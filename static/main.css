@@ -2,7 +2,7 @@ body {
   margin: auto;
   max-width: 45em;
   font-family: 'Helvetica', 'Arial', sans-serif;
-  background: gray;
+  background: #dbdbf5
 }
 
 h1 {
@@ -12,10 +12,48 @@ h1 {
 
 hr {
   border: 0;
-  border-top: 0.05em solid #ccc;
+  border-top: .1em solid #ccc;
   margin: 1em 0;
 }
 
 .content {
   padding: 1em;
+}
+
+.messages {
+  background: beige;
+  padding: .5em;
+  margin-bottom: 1em;
+  border-radius: .5em;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+nav li {
+  display: inline-block;
+  padding: .5em 1em;
+  background: beige;
+  margin: .3em;
+  border-radius: .5em;
+}
+
+nav ul {
+  padding: 0em;
+  margin: .5em;
+  text-align: center;
+}
+
+nav li a {
+  text-decoration: none;
+  color: #000
+}
+
+nav li:hover {
+  background-color: #fdfdff
+}
+
+.info {
+  background: beige;
+  padding: .5em;
+  border-radius: .5em;
 }

@@ -4,16 +4,22 @@
 <hr>
 {% block content %}
 <form action="/send-message" method="post">
-  Content: 
-  <br>
-  <textarea name="content" rows="4" cols="50">{{ content }}</textarea>
-  <br>
-  <input type="submit" value="Send">
-  <input type="hidden" name="chain_id" value="{{ chain_id }}">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  {% if error %}
-  Error: {{ error }}
-  {% endif %}
-  </form>
-  <a href="/chains/{{ chain_id }}">Return to chain</a>
+Content: 
+<br>
+<textarea name="content" rows="4" cols="50">{{ content }}</textarea>
+<br>
+<input type="submit" value="Send">
+<input type="hidden" name="chain_id" value="{{ chain_id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% if error %}
+<div class="info">
+Error: {{ error }}
+</div>
+{% endif %}
+</form>
+<nav>
+<ul>
+<li><a href="/chains/{{ chain_id }}">Return to chain</a></li>
+</ul>
+</nav>
 {% endblock %}

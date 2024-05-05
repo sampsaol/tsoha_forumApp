@@ -43,7 +43,8 @@ def send_topic():
 @app.route("/chains/<int:id>")
 def see_chain(id):
   messages_list = messages.get_messages(id)
-  return render_template("see-messages.html", messages=messages_list, count=len(messages_list), chain_id=id)
+  username = users.get_username()
+  return render_template("see-messages.html", messages=messages_list, count=len(messages_list), chain_id=id, username=username)
 
 @app.route("/new-message/<int:id>")
 def new_message(id):

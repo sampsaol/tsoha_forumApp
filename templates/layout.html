@@ -5,9 +5,13 @@
 <title>Forum App - {% block title %}{% endblock %}</title>
 <h1>Forum App</h1>
 <hr>
-{% block nav %}
-<a href="/">Front page</a> |
-<a href="/logout">Log out</a>
+{% block navigation %}
+<nav>
+<ul>
+<li><a href="/">Front page</a></li>
+<li><a href="/logout">Log out</a></li>
+</ul>
+</nav>
 <hr>
 {% endblock %}
 <div class="content">
