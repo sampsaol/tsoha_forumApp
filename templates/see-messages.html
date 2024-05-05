@@ -1,3 +1,10 @@
+{% extends "layout.html" %}
+{% block nav %}
+<div class="nav-links">
+{{ super() }} | <a href="/new-message/{{ chain_id }}">Post a message</a>
+</div>
+{% endblock %}
+{% block content %}
 Messages in chain: {{ count }}
 <hr>
 {% for message in messages %}
@@ -23,3 +30,4 @@ You are logged in as {{ username }}
 {% else %}
 <a href="/login">Login</a>
 {% endif %}
+{% endblock %}

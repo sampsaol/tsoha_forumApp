@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block content %}
 <form action="/send-message" method="post">
   Content: 
   <br>
@@ -11,3 +13,4 @@
   {% endif %}
   </form>
   <a href="/chains/{{ chain_id }}">Return to chain</a>
+{% endblock %}
